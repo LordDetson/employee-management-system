@@ -34,13 +34,13 @@ public class EmployeeService implements CrudService<Employee, Long> {
     }
 
     @Override
-    public void create(Employee employee) {
+    public Employee create(Employee employee) {
         Employee employeeToSave = Employee.builder()
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
                 .email(employee.getEmail())
                 .build();
-        employeeRepository.save(employeeToSave);
+        return employeeRepository.save(employeeToSave);
     }
 
     @Override

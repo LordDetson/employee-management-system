@@ -10,7 +10,7 @@ public interface CrudService<T, ID> {
 
     long count();
 
-    void create(T element);
+    T create(T element);
 
     T update(ID id, T element);
 }
