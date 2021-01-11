@@ -13,4 +13,6 @@ public interface CrudService<T, ID> {
     T create(T element);
 
     T update(ID id, T element);
+
+    void delete(ID id);
 }

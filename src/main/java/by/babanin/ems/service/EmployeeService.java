@@ -51,4 +51,10 @@ public class EmployeeService implements CrudService<Employee, Long> {
         employeeToSave.setEmail(element.getEmail());
         return employeeRepository.save(element);
     }
+
+    @Override
+    public void delete(Long id) {
+        Employee employee = getById(id);
+        employeeRepository.delete(employee);
+    }
 }

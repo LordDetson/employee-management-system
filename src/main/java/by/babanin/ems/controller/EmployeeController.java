@@ -56,4 +56,10 @@ public class EmployeeController {
         employeeService.update(id, employee);
         return "redirect:/";
     }
+
+    @GetMapping("/employee/delete")
+    public String delete(@RequestParam Long id) {
+        employeeService.delete(id);
+        return "redirect:/";
+    }
 }
