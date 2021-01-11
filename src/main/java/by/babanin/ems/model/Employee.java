@@ -10,6 +10,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "employees")
 public class Employee {
