@@ -8,4 +8,5 @@ public interface CrudService<T> {
 
     long count();
 
+    void create(T element);
 }

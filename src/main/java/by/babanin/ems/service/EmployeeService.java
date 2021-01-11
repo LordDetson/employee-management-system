@@ -24,4 +24,14 @@ public class EmployeeService implements CrudService<Employee> {
     public long count() {
         return employeeRepository.count();
     }
+
+    @Override
+    public void create(Employee employee) {
+        Employee employeeToSave = Employee.builder()
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
+                .email(employee.getEmail())
+                .build();
+        employeeRepository.save(employeeToSave);
+    }
 }
