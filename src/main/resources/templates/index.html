@@ -48,6 +48,32 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-2">
+            <b>Total rows: [[${totalElements}]]</b>
+        </div>
+        <div class="col" th:if="${totalPages > 1}">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${currentPage - 1 < 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/employee/page(number=${currentPage - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <li class="page-item" th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" th:href="@{/employee/page(number=${i})}">[[${i}]]</a>
+                        </li>
+                    </th:block>
+                    <li class="page-item" th:classappend="${currentPage + 1 > totalPages} ? 'disabled'">
+                        <a class="page-link" th:href="@{/employee/page(number=${currentPage + 1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
 <th:block th:insert="~{bootstrap/insertStylesheet :: js}"/>
 </body>

@@ -2,7 +2,8 @@ package by.babanin.ems.controller;
 
 import by.babanin.ems.model.Employee;
 import by.babanin.ems.resource.EmployeeResource;
-import by.babanin.ems.service.CrudService;
+import by.babanin.ems.service.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,20 +16,15 @@ import java.util.List;
 @Controller
 public class EmployeeController {
 
-    private final CrudService<Employee, Long> employeeService;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(CrudService<Employee, Long> employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping("/")
     public String showIndex(Model model) {
-        List<Employee> employees = employeeService.getAll();
-        if (employees.isEmpty()) {
-            model.addAttribute("warningMassage", EmployeeResource.EMPTY_LIST.get());
-        }
-        model.addAttribute("employees", employees);
-        return "index";
+        return showPage(1, 2, model);
     }
 
     @GetMapping("/employee/create")
@@ -61,5 +57,24 @@ public class EmployeeController {
     public String delete(@RequestParam Long id) {
         employeeService.delete(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/employee/page")
+    public String showPage(
+            @RequestParam int number,
+            @RequestParam(required = false, defaultValue = "2") int size,
+            Model model
+    ) {
+        Page<Employee> page = employeeService.getPage(number, size);
+        List<Employee> employees = page.getContent();
+        if (employees.isEmpty()) {
+            model.addAttribute("warningMassage", EmployeeResource.EMPTY_LIST.get());
+            return "index";
+        }
+        model.addAttribute("currentPage", number);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalElements", page.getTotalElements());
+        model.addAttribute("employees", employees);
+        return "index";
     }
 }

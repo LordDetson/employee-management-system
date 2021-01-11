@@ -4,12 +4,14 @@ import by.babanin.ems.exception.ResourceNotFoundException;
 import by.babanin.ems.model.Employee;
 import by.babanin.ems.repository.EmployeeRepository;
 import by.babanin.ems.resource.EmployeeResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EmployeeService implements CrudService<Employee, Long> {
+public class EmployeeService implements CrudService<Employee, Long>, PagingService<Employee> {
 
     private final EmployeeRepository employeeRepository;
 
@@ -56,5 +58,11 @@ public class EmployeeService implements CrudService<Employee, Long> {
     public void delete(Long id) {
         Employee employee = getById(id);
         employeeRepository.delete(employee);
+    }
+
+    @Override
+    public Page<Employee> getPage(int number, int size) {
+        PageRequest pageRequest = PageRequest.of(number - 1, size);
+        return employeeRepository.findAll(pageRequest);
     }
 }
