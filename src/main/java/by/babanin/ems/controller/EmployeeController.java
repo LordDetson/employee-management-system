@@ -6,6 +6,8 @@ import by.babanin.ems.service.CrudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -26,5 +28,18 @@ public class EmployeeController {
         }
         model.addAttribute("employees", employees);
         return "index";
+    }
+
+    @GetMapping("/employee/create")
+    public String showEmployeeCreationForm(Model model) {
+        Employee emptyEmployee = new Employee();
+        model.addAttribute("employee", emptyEmployee);
+        return "employee-creation-form";
+    }
+
+    @PostMapping("/employee/create")
+    public String create(@ModelAttribute Employee employee) {
+        employeeService.create(employee);
+        return "redirect:/";
     }
 }

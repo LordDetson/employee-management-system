@@ -13,6 +13,11 @@
             <h1 class="h3 mb-3 font-weight-normal">Employee List</h1>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <a th:href="@{/employee/create}" class="btn btn-primary mb-3">Create</a>
+        </div>
+    </div>
     <div class="row" th:unless="${warningMassage == null}">
         <div class="col alert alert-danger" role="alert">
             <span th:text="${warningMassage}"/>
