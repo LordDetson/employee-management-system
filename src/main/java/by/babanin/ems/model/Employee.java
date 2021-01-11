@@ -1,13 +1,11 @@
 package by.babanin.ems.model;
 
-import com.sun.istack.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
 @NoArgsConstructor(force = true)
@@ -18,17 +16,17 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    @NotNull
+    @NonNull
     @Column(nullable = false)
-    private String firstName;
+    String firstName;
 
-    @NotNull
+    @NonNull
     @Column(nullable = false)
-    private String lastName;
+    String lastName;
 
-    @NotNull
+    @NonNull
     @Column(nullable = false)
-    private String email;
+    String email;
 }
