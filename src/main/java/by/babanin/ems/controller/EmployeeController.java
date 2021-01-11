@@ -12,9 +12,9 @@ import java.util.List;
 @Controller
 public class EmployeeController {
 
-    private final CrudService employeeService;
+    private final CrudService<Employee> employeeService;
 
-    public EmployeeController(CrudService employeeService) {
+    public EmployeeController(CrudService<Employee> employeeService) {
         this.employeeService = employeeService;
     }
 

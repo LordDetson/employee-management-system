@@ -1,12 +1,10 @@
 package by.babanin.ems.service;
 
-import by.babanin.ems.model.Employee;
-
 import java.util.List;
 
-public interface CrudService {
+public interface CrudService<T> {
 
-    List<Employee> getAll();
+    List<T> getAll();
 
     long count();
 

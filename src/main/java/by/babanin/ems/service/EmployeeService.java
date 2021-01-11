@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EmployeeService implements CrudService {
+public class EmployeeService implements CrudService<Employee> {
 
     private final EmployeeRepository employeeRepository;
 
