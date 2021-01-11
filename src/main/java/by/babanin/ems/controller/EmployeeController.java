@@ -8,15 +8,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
 public class EmployeeController {
 
-    private final CrudService<Employee> employeeService;
+    private final CrudService<Employee, Long> employeeService;
 
-    public EmployeeController(CrudService<Employee> employeeService) {
+    public EmployeeController(CrudService<Employee, Long> employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -40,6 +41,19 @@ public class EmployeeController {
     @PostMapping("/employee/create")
     public String create(@ModelAttribute Employee employee) {
         employeeService.create(employee);
+        return "redirect:/";
+    }
+
+    @GetMapping("/employee/update")
+    public String showEmployeeUpdatingForm(@RequestParam Long id, Model model) {
+        Employee employee = employeeService.getById(id);
+        model.addAttribute("employee", employee);
+        return "employee-updating-form";
+    }
+
+    @PostMapping("/employee/update")
+    public String update(@RequestParam Long id, @ModelAttribute Employee employee) {
+        employeeService.update(id, employee);
         return "redirect:/";
     }
 }

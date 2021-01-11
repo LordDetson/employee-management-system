@@ -1,13 +1,15 @@
 package by.babanin.ems.service;
 
+import by.babanin.ems.exception.ResourceNotFoundException;
 import by.babanin.ems.model.Employee;
 import by.babanin.ems.repository.EmployeeRepository;
+import by.babanin.ems.resource.EmployeeResource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EmployeeService implements CrudService<Employee> {
+public class EmployeeService implements CrudService<Employee, Long> {
 
     private final EmployeeRepository employeeRepository;
 
@@ -18,6 +20,12 @@ public class EmployeeService implements CrudService<Employee> {
     @Override
     public List<Employee> getAll() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(EmployeeResource.NOT_EXIST.format(id)));
     }
 
     @Override
@@ -33,5 +41,14 @@ public class EmployeeService implements CrudService<Employee> {
                 .email(employee.getEmail())
                 .build();
         employeeRepository.save(employeeToSave);
+    }
+
+    @Override
+    public Employee update(Long id, Employee element) {
+        Employee employeeToSave = getById(id);
+        employeeToSave.setFirstName(element.getFirstName());
+        employeeToSave.setLastName(element.getLastName());
+        employeeToSave.setEmail(element.getEmail());
+        return employeeRepository.save(element);
     }
 }
