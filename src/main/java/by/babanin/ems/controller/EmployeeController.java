@@ -4,6 +4,7 @@ import by.babanin.ems.model.Employee;
 import by.babanin.ems.resource.EmployeeResource;
 import by.babanin.ems.service.EmployeeService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class EmployeeController {
 
     @GetMapping("/")
     public String showIndex(Model model) {
-        return showPage(1, 2, model);
+        return showPage(1, 2, Sort.Direction.ASC, "firstName", model);
     }
 
     @GetMapping("/employee/create")
@@ -61,11 +62,13 @@ public class EmployeeController {
 
     @GetMapping("/employee/page")
     public String showPage(
-            @RequestParam int number,
+            @RequestParam(required = false, defaultValue = "1") int number,
             @RequestParam(required = false, defaultValue = "2") int size,
+            @RequestParam(required = false, defaultValue = "ASC") Sort.Direction direction,
+            @RequestParam(required = false, defaultValue = "firstName") String fieldName,
             Model model
     ) {
-        Page<Employee> page = employeeService.getPage(number, size);
+        Page<Employee> page = employeeService.getPage(number, size, direction, fieldName);
         List<Employee> employees = page.getContent();
         if (employees.isEmpty()) {
             model.addAttribute("warningMassage", EmployeeResource.EMPTY_LIST.get());
@@ -74,6 +77,8 @@ public class EmployeeController {
         model.addAttribute("currentPage", number);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalElements", page.getTotalElements());
+        model.addAttribute("currentDirection", direction);
+        model.addAttribute("currentFieldName", fieldName);
         model.addAttribute("employees", employees);
         return "index";
     }

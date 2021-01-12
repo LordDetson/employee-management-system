@@ -28,9 +28,21 @@
             <table class="table table-lite table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">
+                        <a th:href="@{/employee/page(number='1',
+                        direction=${#strings.equals(currentDirection, 'ASC')} ? 'DESC' : 'ASC',
+                        fieldName='firstName')}">First Name</a>
+                    </th>
+                    <th scope="col">
+                        <a th:href="@{/employee/page(number='1',
+                        direction=${#strings.equals(currentDirection, 'ASC')} ? 'DESC' : 'ASC',
+                        fieldName='lastName')}">Last Name</a>
+                    </th>
+                    <th scope="col">
+                        <a th:href="@{/employee/page(number='1',
+                        direction=${#strings.equals(currentDirection, 'ASC')} ? 'DESC' : 'ASC',
+                        fieldName='email')}">Email</a>
+                    </th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -56,17 +68,20 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li class="page-item" th:classappend="${currentPage - 1 < 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/employee/page(number=${currentPage - 1})}" aria-label="Previous">
+                        <a class="page-link" th:href="@{/employee/page(number=${currentPage - 1},
+                        direction=${currentDirection}, fieldName=${currentFieldName})}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
                         <li class="page-item" th:classappend="${currentPage == i} ? 'active'">
-                            <a class="page-link" th:href="@{/employee/page(number=${i})}">[[${i}]]</a>
+                            <a class="page-link" th:href="@{/employee/page(number=${i},
+                        direction=${currentDirection}, fieldName=${currentFieldName})}">[[${i}]]</a>
                         </li>
                     </th:block>
                     <li class="page-item" th:classappend="${currentPage + 1 > totalPages} ? 'disabled'">
-                        <a class="page-link" th:href="@{/employee/page(number=${currentPage + 1})}" aria-label="Next">
+                        <a class="page-link" th:href="@{/employee/page(number=${currentPage + 1},
+                        direction=${currentDirection}, fieldName=${currentFieldName})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

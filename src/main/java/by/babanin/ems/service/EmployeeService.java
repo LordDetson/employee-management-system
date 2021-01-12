@@ -6,6 +6,7 @@ import by.babanin.ems.repository.EmployeeRepository;
 import by.babanin.ems.resource.EmployeeResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,8 +62,8 @@ public class EmployeeService implements CrudService<Employee, Long>, PagingServi
     }
 
     @Override
-    public Page<Employee> getPage(int number, int size) {
-        PageRequest pageRequest = PageRequest.of(number - 1, size);
+    public Page<Employee> getPage(int number, int size, Sort.Direction direction, String fieldName) {
+        PageRequest pageRequest = PageRequest.of(number - 1, size, direction, fieldName);
         return employeeRepository.findAll(pageRequest);
     }
 }
