@@ -1,6 +1,7 @@
 package by.babanin.ems.controller;
 
 import by.babanin.ems.model.Employee;
+import by.babanin.ems.model.Role;
 import by.babanin.ems.resource.EmployeeResource;
 import by.babanin.ems.service.EmployeeService;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class EmployeeController {
@@ -36,7 +38,11 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee/create")
-    public String create(@ModelAttribute Employee employee) {
+    public String create(
+            @ModelAttribute Employee employee,
+            @RequestParam Set<Role> roles
+    ) {
+        employee.setRoles(roles);
         employeeService.create(employee);
         return "redirect:/";
     }
