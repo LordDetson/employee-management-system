@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       lang="en">
 <head>
     <th:block th:insert="~{bootstrap/insertStylesheet :: css}"/>
@@ -15,6 +16,9 @@
     </div>
     <div class="row">
         <div class="col">
+            <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-primary mb-3">
+                Logout <span sec:authentication="principal.username"/>
+            </a>
             <a th:href="@{/employee/create}" class="btn btn-primary mb-3">Create</a>
         </div>
     </div>
