@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        lang="en">
+<head>
+    <th:block th:insert="~{bootstrap/insertStylesheet :: css}"/>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            <div class="alert alert-danger" th:if="${param.error}">Email or password is invalid!</div>
+            <div class="alert alert-info" th:if="${param.logout}">You have been logged out.</div>
+            <form action="#" th:action="@{/login}" method="post">
+                <div class="form-group row">
+                    <label for="email" class="col-md-3 col-form-label">Email:</label>
+                    <div class="col-md-9">
+                        <input id="email" class="form-control" type="text" name="username" required autofocus>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-md-3 col-form-label">Password:</label>
+                    <div class="col-md-9">
+                        <input id="password" class="form-control" type="password" name="password" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+                    <span>New user? <a th:href="@{/registration}">Registration</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<th:block th:insert="~{bootstrap/insertStylesheet :: js}"/>
+</body>
+</html>
