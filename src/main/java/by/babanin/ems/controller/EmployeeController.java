@@ -3,6 +3,7 @@ package by.babanin.ems.controller;
 import by.babanin.ems.model.Employee;
 import by.babanin.ems.model.Role;
 import by.babanin.ems.resource.EmployeeResource;
+import by.babanin.ems.security.AdminAllowed;
 import by.babanin.ems.service.EmployeeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,7 @@ public class EmployeeController {
         return showPage(1, 2, Sort.Direction.ASC, "firstName", model);
     }
 
+    @AdminAllowed
     @GetMapping("/employee/create")
     public String showEmployeeCreationForm(Model model) {
         Employee emptyEmployee = new Employee();
@@ -37,6 +39,7 @@ public class EmployeeController {
         return "employee-creation-form";
     }
 
+    @AdminAllowed
     @PostMapping("/employee/create")
     public String create(
             @ModelAttribute Employee employee,
@@ -47,6 +50,7 @@ public class EmployeeController {
         return "redirect:/";
     }
 
+    @AdminAllowed
     @GetMapping("/employee/update")
     public String showEmployeeUpdatingForm(@RequestParam Long id, Model model) {
         Employee employee = employeeService.getById(id);
@@ -54,12 +58,14 @@ public class EmployeeController {
         return "employee-updating-form";
     }
 
+    @AdminAllowed
     @PostMapping("/employee/update")
     public String update(@RequestParam Long id, @ModelAttribute Employee employee) {
         employeeService.update(id, employee);
         return "redirect:/";
     }
 
+    @AdminAllowed
     @GetMapping("/employee/delete")
     public String delete(@RequestParam Long id) {
         employeeService.delete(id);
